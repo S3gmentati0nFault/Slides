@@ -1,0 +1,375 @@
+---
+marp: true
+style: |
+    section.centered {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        width: auto;
+    }
+---
+
+<!-- _class: centered -->
+
+# Graph coloring
+
+plus five words about myself
+
+---
+
+## Table of contents
+
+1. Who am I? 
+    A fast introduction to myself.
+
+
+2. My master's thesis
+    An overview of the work I did for my thesis.
+
+
+3. Graph coloring
+    Literature review for the topic I am interested in.
+
+---
+
+<!-- _class: centered -->
+
+# 1. Who am I?
+
+---
+
+## Hallo! I'm
+
+<div class="colwrap">
+<div class="left">
+Alessandro Biagiotti, 
+
+I just completed my Master's degree in computer science. I studied mostly: algorithms, parallel and distributed computing, ML and physics.
+</div>
+<div class="right inverted">
+<img width="60%" src="./img/pfp.jpg">
+</div>
+</div>
+
+---
+
+## My academic life
+
+- 2018: Began my bachelor in Computer Engineering, couldn't finish due to Covid19 struggles.
+
+
+- 2020: Changed my bachelor to computer science.
+
+
+- 2022: Graduated with a thesis on Web Application development in team. In September I started my Master's.
+
+
+- 2023: Did my Erasmus in Heidelberg I attended a mix of courses in Computer Science, Scientific Computing and Physics.
+
+
+- 2025: Graduated in Computer Science with a thesis on Machine Learning applied to Superconductor behavior.
+
+---
+
+## Three things I love and one I hate
+
+1. I love trekking and climbing.
+
+
+2. I love cinema and movies (one of my whole time favourites is Ivan's childhood).
+
+
+3. I love to interact with people.
+
+
+I am not the biggest fan of football.
+
+---
+
+# 2. My master thesis
+
+---
+
+## Superconductors
+
+A superconductor is a material allowing the passage of electrical current having electrical resistance $R = 0$.
+
+Superconducting material can be of the first type (top image) or of the second type (bottom image). Superconductors of the second type are usually employed in the field of high energy physics.
+
+---
+
+## Large Hadron Collider
+
+- Operational since 2009.
+
+- Uses two counter-rotating proton beams that meet in one of the interaction regions (CMS, ATLAS, LHC-b, ALICE) at circa 14 TeV.
+
+- Used for fundamental physics experiments.
+
+---
+
+## High order correctors
+
+Span the information
+
+Developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
+
+Designed to correct field errors introduced by the new Focusing quadrupoles.
+
+---
+
+## My contribution
+
+---
+
+## Performance evaluation
+
+- Accuracy (Acc), fraction of correct predictions.
+
+- Precision (Prc), number of true positives over number of positive predictions.
+
+- Recall (Rec), number of true positives over the number of expected positives.
+
+- Inverse recall (Irec), number of true negatives over the number of expected negatives.
+
+- F1 score (F1), harmonic mean of Precision and recall.
+
+- ROC AUC (RAUC), a good indicator of the quality of the model found.
+
+---
+
+## Decision trees for QRP
+
+- High explainability,
+
+- High degree of performance,
+
+- Highly customizable structures.
+
+---
+
+<!-- _class = .centered -->
+
+# Graph coloring problem
+
+---
+
+## What is the graph coloring problem?
+
+Given an undirected and unlabelled graph $G = (V, E)$, we say that a function $f$ is a *correct* coloring for $G \iff f(v) \neq f(u)$ for all $u$ and $v$ neighbouring vertices.
+
+The minimum number of colors required to obtain a correct coloring for $G$ is known as the *chromatic number* for $G, \chi(G)$.
+
+---
+
+## GCP is a complex problem
+
+- Deciding whether a graph is $k$ colorable is NP-complete.
+
+- Finding the chromatic number $\chi(G)$ for a graph is NP-hard.
+
+- Variations of the problem are also \#P complete (e.g. count the number of $3$-colorings in the graph).
+
+---
+
+## Some applications of GCP
+
+1. Resource allocation tasks:
+
+    - Assigning frequencies in networks,
+
+    - Timetabling in problems (e.g. assigning rooms to exams),
+
+    - Register allocations in compilers <a href="#footnote-1">\[1\]</a>.
+
+2. Parallelising factorization steps (e.g. ILU factorization \[\]).
+
+<br></br><br>
+
+
+<h4></h4>
+<sub><sub><sub>
+<div id="footnote-1"></div>
+1. For more information about how this could be used check out Moritz's slides.
+</sub></sub></sub>
+
+---
+
+<!-- _class: centered -->
+
+# Landscape of available CPU solutions
+
+---
+
+## Dsatur \[Bre79\]
+
+<div class="colwrap">
+<div class="left">
+Despite its age Dsatur has been proven solid and I consistently found it as a reference technique in the literature.
+
+This method finds an exact coloring for bipartite graphs. It can be used as a lower bound on the Chromatic number.
+</div>
+<div class="right inverted">
+<code>
+1. <u>Sort</u> all vertices in decreasing degree order.
+<br>
+<br>
+2. <u>Color</u> a vertex of maximal degree with 1.
+<br>
+<br>
+3. <u>Choose</u> a vertex of maximal saturation <a href="#footnote-2">[2]</a>.
+<br>
+<br>
+4. <u>Color</u> the vertex with the least possible number.
+<br>
+<br>
+5. <u>Loop</u> until all vertices are colored.
+</code>
+</div>
+</div>
+
+<h4></h4>
+<sub><sub><sub>
+<div id="footnote-2"></div>
+2. We define saturation of a vertex  the amount of neighbours that have been colored.
+</sub></sub></sub>
+
+---
+
+## Hybrid Evolutionary Algorithm \[Hao99\]
+
+<div class="colwrap">
+<div class="left">
+HEA for GCP was ideated by Galiner and Hao in 1999 and proved to be a successful algorithm to solve the problem.
+
+The local optimization step is what sets it apart from more classical EA <a
+    href="#footnote-3">[3]</a>.
+</div>
+<div class="right inverted">
+<code>
+1. <u>Generate</u> the initial population with a variant of <u>Dsatur</u>.
+<br>
+2. While there is no convergence or we are within a certain number of iterations:
+<br></br>
+3. Choose the parents from the population.
+<br>
+4. Perform crossover.
+<br>
+5. Perform L iterations of <u>Tabu Search</u>.
+<br>
+6. Update the population by removing the worse parent.
+</code>
+</div>
+</div>
+
+<h4></h4>
+<sub><sub><sub>
+<div id="footnote-3"></div>
+3. A study [Glass03] highlights the fact that the algorithm remains a strong performer even if the TS component is removed.
+</sub></sub></sub>
+
+---
+
+## Crossover in \[Hao99\]
+
+<div class="img-center">
+    <img width="80%" src="img/crossover.png">
+</div>
+
+---
+
+## Hill climbing heuristic \[Rhyd09\]
+
+<div class="colwrap">
+<div class="left">
+The Hill Climbing Heuristic combines Dsatur, local search and the first fit heuristic in a single package and tries to provide performance close to the ones obtained by HEA. 
+</div>
+<div class="right inverted">
+<code>
+1. <u>Generate</u> the initial solution for the problem &pi;.
+<br>
+2. Put a small part of the classes of &pi; in a new permutation &rho;.
+<br>
+3. Utilize a <u>local search technique</u> to make sure that both &pi; and &rho; remain feasible and do not increase the number of classes used.
+<br>
+4. <u>Append</u> &rho; to &pi;.
+<br>
+5. Do a <u>shuffle</u> of the obtained solution.
+<br>
+6. Run the <u>first fit heuristic</u> and go back to 2
+</code>
+</div>
+</div>
+
+---
+
+<!-- _class: centered -->
+
+# Landscape of available GPU solutions
+
+---
+
+## Jones Plassmann Luby \[Plmn93\]
+
+<div class="colwrap">
+<div class="left">
+JPL is a classical coloring algorithm ideated in 1993 by Jones and Plassman, they interpreted the coloring as an independent set to use Luby's Monte Carlo approach capable of identifying an independent set in a graph in parallel.
+</div>
+<div class="right inverted">
+<code>
+1. Associate a random number to the vertices in the graph.
+<br></br>
+2. Construct an independent set I <u>in parallel</u>.
+<br></br>
+3. Color I <u>in parallel</u>.
+</code>
+</div>
+</div>
+
+---
+
+## The JPL problem \[Bor23\]
+
+---
+
+## Cohen Castonguay \[Coh12\]
+
+The Cohen-Castonguay algorithm is a different spin of the JPL that modifies the procedure used to construct the independent set.
+
+Instead of using memory to store the random number associated to each vertex we identify a set of $k$ different hash functions.
+
+This approach is much faster than accessing memory, but increases the complexity of the algorithm because it's now necessary to identify a good value for $k$ and then the coloring information needs to be combined, to do so we can use many different heuristics (e.g. embewing an ordering in the hash function list).
+
+---
+
+## Atos framework \[Yux22\]
+
+Atos is a task-parallel GPU dynamic scheduling framework that offers a solution to the three main performance bottlenecks of working with graphs:
+
+- Small frontier problem,
+
+- Load imbalance,
+
+- Loss of concurrency opportunities.
+
+The key aspects leveraged by Yuxin et al. are: Barrier relaxation, worker size, balancing data and task parallelism and kernel strategy (with either persistent or discrete kernel calls).
+
+---
+
+## Atos vs Gunrock
+
+---
+
+## Atos vs Gunrock \[Yux22\]
+
+The framework is compared to the BSP framework Gunrock (which was first revealed in 2018), and the performance can be quite a bit better, despite the drawbacks of the reuse approach required by the speculative behavior of the algorithms.
+
+In the images below we see the compute time of different configurations for the Atos framework compared with a simulation of Gunrock (left), in ms, and the amount of repeated calculations due to speculation on the right.
+
+<div style="display:flex;flex-direction:horizontal;">
+    <img src="img/runtimes_atos.png">
+    <img width="55%" src="img/replication_atos.png">
+</div>
+
+---
