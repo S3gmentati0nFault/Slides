@@ -87,7 +87,9 @@ I am not the biggest fan of football.
 
 ---
 
-# 2. My master thesis
+<!-- _class: centered -->
+
+# 2. My master's thesis
 
 ---
 
@@ -119,7 +121,31 @@ Designed to correct field errors introduced by the new Focusing quadrupoles.
 
 ---
 
+## The quench phenomenon
+
+A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to
+the normal conducting state. This change leads to an important change in the material's behavior
+which, in the field of accelerator physics, can lead to:
+
+- Material destruction,
+
+- Important economical and temporal losses,
+
+- Beam loss,
+
+- Potential damage to experiments.
+
+---
+
 ## My contribution
+
+Using explainable machine learning models we tried to solve the following problems:
+
+- Quench recognition: Identifying whether the magnet has quenched or not.
+
+- Quench localization: If the magnet has quenched find an explainable machine learning model capable to identify the coil the has quenched.
+
+- Quench recognition +: A variation of QRP that has been used to provide the first solutions for QLP.
 
 ---
 
@@ -149,7 +175,23 @@ Designed to correct field errors introduced by the new Focusing quadrupoles.
 
 ---
 
-<!-- _class = .centered -->
+## Conclusions
+
+##### What we achieved
+We found explainable ML models for the problem of quench recognition and localization in superconducting magnets.
+
+##### The limitations of our results
+1. The scarsity of the available data is an important limitation for our results.
+2. The results only applied to the particular family of High Order Correctors.
+
+##### What we want to see in the future
+1. Clustering approach,
+2. High speed QRP and QLP models for online settings,
+3. Fuzzy description of the quench event.
+
+---
+
+<!-- _class: centered -->
 
 # Graph coloring problem
 
@@ -331,6 +373,8 @@ JPL is a classical coloring algorithm ideated in 1993 by Jones and Plassman, the
 
 ## The JPL problem \[Bor23\]
 
+![w:700](./img/problem_JPL.jpeg)
+
 ---
 
 ## Cohen Castonguay \[Coh12\]
@@ -357,13 +401,9 @@ The key aspects leveraged by Yuxin et al. are: Barrier relaxation, worker size, 
 
 ---
 
-## Atos vs Gunrock
-
----
-
 ## Atos vs Gunrock \[Yux22\]
 
-The framework is compared to the BSP framework Gunrock (which was first revealed in 2018), and the performance can be quite a bit better, despite the drawbacks of the reuse approach required by the speculative behavior of the algorithms.
+Atos is compared to the BSP framework Gunrock (which was first revealed in 2018), and the performance can be quite a bit better, despite the drawbacks of the reuse approach required by the speculative behavior of the algorithms.
 
 In the images below we see the compute time of different configurations for the Atos framework compared with a simulation of Gunrock (left), in ms, and the amount of repeated calculations due to speculation on the right.
 
@@ -373,3 +413,42 @@ In the images below we see the compute time of different configurations for the 
 </div>
 
 ---
+
+## Atos (right) vs Gunrock (left)
+
+<div style="display:flex;flex-direction:horizontal;">
+    <img width="50%" src="img/bsp.png">
+    <img width="50%" src="img/atos.png">
+</div>
+
+---
+
+## Sources
+
+**\[Bre79\]** :: Brélaz, Daniel; *New methods to color the vertices of a graph* April 1979 Commun. ACM pp 251 - 256 [doi](https://doi.org/10.1145/359094.359101)
+
+**\[Hao99\]** :: Galiner, Philippe; Hao, Jin-Kao; *Hybrid Evolutionary Algorithms for Graph Coloring* 1999 Journal of Combinatorial Optimization pp 379 - 397 [springer](https://link.springer.com/article/10.1023/A:1009823419804)
+
+**\[Glass03\]** :: Glass, Celia A.; Prügel-Bennett, Adam; *Genetic Algorithm for Graph Coloring: Exploration of Galinier and Hao's Algorithm* September 2003 Journal of Combinatorial Optimization pp 229 - 236 [doi](https://doi.org/10.1023/A:1027312403532)
+
+**\[Rhyd09\]** :: Rhydian, Lewis; *A general-purpose hill-climbing method for order independent minimum grouping problems: A case study in graph colouring and bin packing* 2009 Computers & Operations Research pp 2295-2310 [doi](https://doi.org/10.1016/j.cor.2008.09.004)
+
+---
+
+## Sources (cont'd)
+
+**\[Plmn93\]** :: Jones, Mark T.; Plassmann, Paul E.; *A Parallel Graph Coloring Heuristic* 1993 SIAM Journal on Scientific Computing pp 654 - 669 [doi](https://doi.org/10.1137/0914041)
+
+**\[Bor23\]** :: Borione, Alessandro; Cardone, Lorenzo; Calabrese, Andrea; Quer, Stefano; *An Experimental Evaluation of Graph Coloring Heuristics on Multi- and Many-Core Architectures* 2023 IEEE Access pp 125226-125243 [ieee](https://ieeexplore.ieee.org/document/10304117)
+
+**\[Coh12\]** :: Cohen, J.; Castonguay, P.; *Efficient Graph Matching and Coloring on the GPU* 2012 GPU Tech., GTC on-demand
+
+**\[Yux22\]** :: Chen, Yuxin; Brock, Benjamin; Porumbescu, Serban; Buluc, Aydin; Yelick, Catherine; Owens, John; *Atos: a task-parallel GPU scheduler for graph analytics* 2023 Proceedings of the 51st international conference on parallel processing, Association for Computing Machinery [doi](https://doi.org/10.1145/3545008.3545056)
+
+---
+
+<!-- _class: centered -->
+
+# Thank you for your time
+
+Any questions?
