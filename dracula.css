@@ -168,7 +168,7 @@ blockquote {
 ul > li,
 ol > li {
   margin: 0.3em 0 0 0;
-  color:  var(--dracula-cyan);
+  color:  var(--dracula-foreground);
 }
 ul > li > p,
 ol > li > p {
@@ -357,7 +357,17 @@ div.colwrap div.right {
   right: 0;
 }
 
-img {
-  display: block;
-  margin:30px auto auto auto;
+div.himg {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #FBD603;
+  flex-direction: row;
+}
+
+div.vimg {
+  display: flex;
+  justify-content: center;
+  background-color: #ABBAEA;
+  flex-direction: column;
 }

@@ -103,11 +103,20 @@ Superconducting material can be of the first type (top image) or of the second t
 
 ## Large Hadron Collider
 
+<div class="colwrap">
+<div class="left" style="margin-top:60px">
+
 - Operational since 2009.
 
 - Uses two counter-rotating proton beams that meet in one of the interaction regions (CMS, ATLAS, LHC-b, ALICE) at circa 14 TeV.
 
 - Used for fundamental physics experiments.
+
+</div>
+<div class="right inverted">
+<img width="80%" src="./img/lhc.jpg">
+</div>
+</div>
 
 ---
 
@@ -118,6 +127,12 @@ Span the information
 Developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
 
 Designed to correct field errors introduced by the new Focusing quadrupoles.
+
+<br>
+
+<div class="himg">
+    <img width="800px" src="./img/HighOrders3.jpg">
+</div>
 
 ---
 
@@ -167,11 +182,22 @@ Using explainable machine learning models we tried to solve the following proble
 
 ## Decision trees for QRP
 
+<div class="colwrap">
+<div class="left" style="margin-top:150px">
+
 - High explainability,
 
 - High degree of performance,
 
 - Highly customizable structures.
+
+</div>
+
+<div class="right inverted vimg">
+    <img width="500px" src="./img/An_dt.png">
+    <img width="500px" src="./img/best_trees.png">
+</div>
+
 
 ---
 
@@ -315,8 +341,8 @@ The local optimization step is what sets it apart from more classical EA <a
 
 ## Crossover in \[Hao99\]
 
-<div class="img-center">
-    <img width="80%" src="img/crossover.png">
+<div class="himg" style="margin-top:100px">
+    <img width="90%" src="img/crossover.png">
 </div>
 
 ---
@@ -373,7 +399,9 @@ JPL is a classical coloring algorithm ideated in 1993 by Jones and Plassman, the
 
 ## The JPL problem \[Bor23\]
 
-![w:700](./img/problem_JPL.jpeg)
+<div class="himg" style="margin-top:50px">
+    <img width="700px" src="./img/problem_JPL.jpeg">
+</div>
 
 ---
 
@@ -407,18 +435,18 @@ Atos is compared to the BSP framework Gunrock (which was first revealed in 2018)
 
 In the images below we see the compute time of different configurations for the Atos framework compared with a simulation of Gunrock (left), in ms, and the amount of repeated calculations due to speculation on the right.
 
-<div style="display:flex;flex-direction:horizontal;">
-    <img src="img/runtimes_atos.png">
-    <img width="55%" src="img/replication_atos.png">
+<div class="himg" style="margin-top:30px">
+    <img width="50%" src="img/runtimes_atos.png">
+    <img width="50%" src="img/replication_atos.png">
 </div>
 
 ---
 
 ## Atos (right) vs Gunrock (left)
 
-<div style="display:flex;flex-direction:horizontal;">
+<div class="himg" style="margin-top:50px">
     <img width="50%" src="img/bsp.png">
-    <img width="50%" src="img/atos.png">
+    <img width="60%" src="img/atos.png">
 </div>
 
 ---
