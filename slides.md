@@ -95,9 +95,49 @@ I am not the biggest fan of football.
 
 ## Superconductors
 
+<div class="colwrap">
+<div class="left" style="margin-top:60px">
+
 A superconductor is a material allowing the passage of electrical current having electrical resistance $R = 0$.
 
 Superconducting material can be of the first type (top image) or of the second type (bottom image). Superconductors of the second type are usually employed in the field of high energy physics.
+
+</div>
+<div class="right inverted vimg">
+<img src="./img/typ1.png">
+<img src="./img/typ2.png">
+</div>
+</div>
+
+---
+
+## The quench phenomenon
+
+A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to the normal conducting state. This change leads to an important change in the material's behavior which, in the field of accelerator physics, can lead to:
+
+- Material destruction,
+
+- Important economical and temporal losses,
+
+- Beam loss,
+
+- Potential damage to experiments.
+
+---
+
+## High order correctors
+
+- Developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
+
+- Designed to correct field errors introduced by the new Focusing quadrupoles.
+
+- Superconducting magnets
+
+<br>
+
+<div class="himg">
+    <img width="800px" src="./img/HighOrders3.jpg">
+</div>
 
 ---
 
@@ -117,36 +157,6 @@ Superconducting material can be of the first type (top image) or of the second t
 <img width="80%" src="./img/lhc.jpg">
 </div>
 </div>
-
----
-
-## High order correctors
-
-Span the information
-
-Developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
-
-Designed to correct field errors introduced by the new Focusing quadrupoles.
-
-<br>
-
-<div class="himg">
-    <img width="800px" src="./img/HighOrders3.jpg">
-</div>
-
----
-
-## The quench phenomenon
-
-A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to the normal conducting state. This change leads to an important change in the material's behavior which, in the field of accelerator physics, can lead to:
-
-- Material destruction,
-
-- Important economical and temporal losses,
-
-- Beam loss,
-
-- Potential damage to experiments.
 
 ---
 
