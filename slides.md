@@ -138,9 +138,7 @@ Designed to correct field errors introduced by the new Focusing quadrupoles.
 
 ## The quench phenomenon
 
-A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to
-the normal conducting state. This change leads to an important change in the material's behavior
-which, in the field of accelerator physics, can lead to:
+A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to the normal conducting state. This change leads to an important change in the material's behavior which, in the field of accelerator physics, can lead to:
 
 - Material destruction,
 
@@ -161,6 +159,20 @@ Using explainable machine learning models we tried to solve the following proble
 - Quench localization: If the magnet has quenched find an explainable machine learning model capable to identify the coil the has quenched.
 
 - Quench recognition +: A variation of QRP that has been used to provide the first solutions for QLP.
+
+---
+
+## The data
+
+- The data consisted of $4$ different datasets describing the magnetic field quality measured after
+a quench event or after the magnet discharge.
+
+- Each dataset consisted of $279$ data points divided in $15$ harmonics.
+
+- The data describes the magnet behavior as a whole.
+
+- The data was split in two sets: one of $250$ samples for experiments and one of $29$ points for
+testing.
 
 ---
 
@@ -201,6 +213,53 @@ Using explainable machine learning models we tried to solve the following proble
 
 ---
 
+## Performance for aggregate models
+
+Decision trees already performed well, but we decided to look into different models to see if we
+could unlock better performing models. Thus we started looking into models aggregating trees.
+
+- Random Forests were our first guess but they didn't provide a good enough performance improvement
+compared to the structure's complexity.
+
+- Making informed choices regarding which model would go in the forest (instead of sampling randomly
+from the set of available features for splits) provided better performance.
+
+---
+
+## Performance for aggregate models (cont'd)
+<div class="colwrap">
+<div class="left">
+
+- We compared the performance of the other models against an unexplainable model (SVC), which is characterized by a very high level of performance.
+
+- Our 'informed-sampling' model proved to have very good performance in experiments and the final
+blind test proved that the performance actually hold.
+
+</div>
+
+<div class="right inverted vimg">
+    <img width="550px" src="./img/model_comparison.png">
+</div>
+
+---
+
+## Solutions for QLP
+
+-  We tried doing an extension of QRP solvers to QLP with little success (due to the complex nature of the multiclass problem).
+
+- Our solution was to have a tree constructed on every coil to solve the QRP+ problem for that specific coil. Thus it was very important to make sure that the submodels were as easy as possible (the final model contains $4$ different submodels, one per coil).
+
+- The results obtained using the scorer defined below were modest 
+Experiments: $0.952 \pm 0.002$
+Final test: $0.96 \pm 0.09$
+
+$$
+\mathcal{H}(y, \hat{y}) = 1 - \frac{h(y, \hat{y})}{4}
+$$
+
+---
+
+
 ## Conclusions
 
 ##### What we achieved
@@ -214,6 +273,16 @@ We found explainable ML models for the problem of quench recognition and localiz
 1. Clustering approach,
 2. High speed QRP and QLP models for online settings,
 3. Fuzzy description of the quench event.
+
+---
+
+## Clustering example
+
+<div class="himg">
+
+![w:1000](./img/Clustering.png)
+
+</div>
 
 ---
 
