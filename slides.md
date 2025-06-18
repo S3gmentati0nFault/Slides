@@ -21,7 +21,7 @@ plus five words about myself
 ## Table of contents
 
 1. Who am I? 
-    A fast introduction to myself.
+    A couple of words about me.
 
 
 2. My master's thesis
@@ -56,13 +56,13 @@ I just completed my Master's degree in computer science. I studied mostly: algor
 
 ## My academic life
 
-- 2018: Began my bachelor in Computer Engineering, couldn't finish due to Covid19 struggles.
+- 2018: Began my bachelor's in Computer Engineering, couldn't finish due to Covid19 struggles.
 
 
-- 2020: Changed my bachelor to computer science.
+- 2020: Changed my bachelor's to computer science.
 
 
-- 2022: Graduated with a thesis on Web Application development in team. In September I started my Master's.
+- 2022: Graduated with a thesis on Web Application development in team. In September I started my master's.
 
 
 - 2023: Did my Erasmus in Heidelberg I attended a mix of courses in Computer Science, Scientific Computing and Physics.
@@ -77,7 +77,7 @@ I just completed my Master's degree in computer science. I studied mostly: algor
 1. I love trekking and climbing.
 
 
-2. I love cinema and movies (one of my whole time favourites is Ivan's childhood).
+2. I love cinema and movies (one of my whole time favourites is *Ivan's childhood*).
 
 
 3. I love to interact with people.
@@ -96,11 +96,9 @@ I am not the biggest fan of football.
 ## Superconductors
 
 <div class="colwrap">
-<div class="left" style="margin-top:60px">
+<div class="left">
 
-A superconductor is a material allowing the passage of electrical current having electrical resistance $R = 0$.
-
-Superconducting material can be of the first type (top image) or of the second type (bottom image). Superconductors of the second type are usually employed in the field of high energy physics.
+Superconducting material can be of the first type (top image) or of the second type (bottom image) based on how the magnetization changes in response to the intensity of the applied magnetic field. Superconductors of the second type are usually employed in the field of high energy physics.
 
 </div>
 <div class="right inverted vimg">
@@ -113,7 +111,7 @@ Superconducting material can be of the first type (top image) or of the second t
 
 ## The quench phenomenon
 
-A superconductor quenches whenever it unpredicatbly transitions from the superconducting state to the normal conducting state. This change leads to an important change in the material's behavior which, in the field of accelerator physics, can lead to:
+Superconducting material allows the passage of current with electrical resistance $R = 0$. Whenever a superconductor quenches it unpredicatbly transitions from the superconducting state to the normal conducting state. This change makes the electrical resistance $R > 0$, which can lead to costly consequences in the field of accelerator physics:
 
 - Material destruction,
 
@@ -127,11 +125,11 @@ A superconductor quenches whenever it unpredicatbly transitions from the superco
 
 ## High order correctors
 
-- Developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
+High order correctors is the family of souperconducting magnets we analysed for our experiments, they were:
 
-- Designed to correct field errors introduced by the new Focusing quadrupoles.
+- developed by INFN/LASA, to be installed on LHC for the high luminosity upgrade.
 
-- Superconducting magnets
+- designed to correct field errors introduced by the new Focusing quadrupoles.
 
 <br>
 
@@ -144,13 +142,15 @@ A superconductor quenches whenever it unpredicatbly transitions from the superco
 ## Large Hadron Collider
 
 <div class="colwrap">
-<div class="left" style="margin-top:60px">
+<div class="left">
 
 - Operational since 2009.
 
 - Uses two counter-rotating proton beams that meet in one of the interaction regions (CMS, ATLAS, LHC-b, ALICE) at circa 14 TeV.
 
 - Used for fundamental physics experiments.
+
+- HiLumi is an update of the machine meant to increase the luminosity of the accelerator tenfold.
 
 </div>
 <div class="right inverted">
@@ -166,23 +166,21 @@ Using explainable machine learning models we tried to solve the following proble
 
 - Quench recognition: Identifying whether the magnet has quenched or not.
 
-- Quench localization: If the magnet has quenched find an explainable machine learning model capable to identify the coil the has quenched.
+- Quench localization: If the magnet has quenched localize the quenched coils within the magnet assembly.
 
-- Quench recognition +: A variation of QRP that has been used to provide the first solutions for QLP.
+- Quench recognition +: Identify whether a specific coil within the magnet has quenched or not.
 
 ---
 
 ## The data
 
-- The data consisted of $4$ different datasets describing the magnetic field quality measured after
-a quench event or after the magnet discharge.
+- The data consisted of $4$ different datasets describing the magnetic field quality measured after a quench event or after the magnet discharge.
 
 - Each dataset consisted of $279$ data points divided in $15$ harmonics.
 
 - The data describes the magnet behavior as a whole.
 
-- The data was split in two sets: one of $250$ samples for experiments and one of $29$ points for
-testing.
+- The data was split in two sets: one of $250$ samples for experiments and one of $29$ points for testing.
 
 ---
 
@@ -225,14 +223,11 @@ testing.
 
 ## Performance for aggregate models
 
-Decision trees already performed well, but we decided to look into different models to see if we
-could unlock better performing models. Thus we started looking into models aggregating trees.
+Decision trees already performed well, but we decided to look into different models to see if we could unlock better performing models. Thus we started looking into models aggregating trees.
 
-- Random Forests were our first guess but they didn't provide a good enough performance improvement
-compared to the structure's complexity.
+- Random Forests were our first guess but they didn't provide a good enough performance improvement compared to the structure's complexity.
 
-- Making informed choices regarding which model would go in the forest (instead of sampling randomly
-from the set of available features for splits) provided better performance.
+- Swapping the random feature sampling, characteristic of RFs, and moving to a model that constructs the forest picking the best available trees was a key idea that lead to better performance.
 
 ---
 
@@ -240,10 +235,9 @@ from the set of available features for splits) provided better performance.
 <div class="colwrap">
 <div class="left">
 
-- We compared the performance of the other models against an unexplainable model (SVC), which is characterized by a very high level of performance.
+- We compared the performance of the other models against an unexplainable benchmarcking model (SVC), known for the generally solid performance.
 
-- Our 'informed-sampling' model proved to have very good performance in experiments and the final
-blind test proved that the performance actually hold.
+- Our 'informed-sampling' model proved to have very good performance in experiments and the final blind test showed that the performance extend to unseen scenarios.
 
 </div>
 
@@ -255,7 +249,7 @@ blind test proved that the performance actually hold.
 
 ## Solutions for QLP
 
--  We tried doing an extension of QRP solvers to QLP with little success (due to the complex nature of the multiclass problem).
+-  We tried doing an extension of QRP solvers to QLP with little success (due to the complex nature of the multilabel problem).
 
 - Our solution was to have a tree constructed on every coil to solve the QRP+ problem for that specific coil. Thus it was very important to make sure that the submodels were as easy as possible (the final model contains $4$ different submodels, one per coil).
 
@@ -273,15 +267,15 @@ $$
 ## Conclusions
 
 ##### What we achieved
-We found explainable ML models for the problem of quench recognition and localization in superconducting magnets.
+We found explainable ML models capable of solving QRP and QLP.
 
 ##### The limitations of our results
 1. The scarsity of the available data is an important limitation for our results.
-2. The results only applied to the particular family of High Order Correctors.
+2. The results only apply to the particular family of High Order Correctors.
 
-##### What we want to see in the future
-1. Clustering approach,
-2. High speed QRP and QLP models for online settings,
+##### What we want to try in the future
+1. Clustering.
+2. High speed QRP and QLP solvers for online environments.
 3. Fuzzy description of the quench event.
 
 ---
@@ -304,7 +298,7 @@ We found explainable ML models for the problem of quench recognition and localiz
 
 ## What is the graph coloring problem?
 
-Given an undirected and unlabelled graph $G = (V, E)$, we say that a function $f$ is a *correct* coloring for $G \iff f(v) \neq f(u)$ for all $u$ and $v$ neighbouring vertices.
+Given an undirected and unlabelled graph $G = (V, E)$, we say that a function $f$ is a *correct* coloring for $G \iff f(v) \neq f(u)$ for all $u$ and $v$ pairs of neighbouring vertices.
 
 The minimum number of colors required to obtain a correct coloring for $G$ is known as the *chromatic number* for $G, \chi(G)$.
 
@@ -316,7 +310,8 @@ The minimum number of colors required to obtain a correct coloring for $G$ is kn
 
 - Finding the chromatic number $\chi(G)$ for a graph is NP-hard.
 
-- Variations of the problem are also \#P complete (e.g. count the number of $3$-colorings in the graph).
+- Variations of the problem are also \#P complete (e.g. count the number of 
+$3$-colorings in the graph).
 
 ---
 
@@ -330,7 +325,7 @@ The minimum number of colors required to obtain a correct coloring for $G$ is kn
 
     - Register allocations in compilers <a href="#footnote-1">\[1\]</a>.
 
-2. Parallelising factorization steps (e.g. ILU factorization \[\]).
+2. Parallelising factorization steps (e.g. ILU factorization \[Nau15\]).
 
 <br></br><br>
 
@@ -355,7 +350,7 @@ The minimum number of colors required to obtain a correct coloring for $G$ is kn
 <div class="left">
 Despite its age Dsatur has been proven solid and I consistently found it as a reference technique in the literature.
 
-This method finds an exact coloring for bipartite graphs. It can be used as a lower bound on the Chromatic number.
+This method finds an exact coloring for bipartite graphs. It can be used as a lower bound on $\chi(G)$ since it begins coloring a maximal clique.
 </div>
 <div class="right inverted">
 <code>
@@ -413,7 +408,7 @@ The local optimization step is what sets it apart from more classical EA <a
 <h4></h4>
 <sub><sub><sub>
 <div id="footnote-3"></div>
-3. A study [Glass03] highlights the fact that the algorithm remains a strong performer even if the TS component is removed.
+3. [Glass03] highlights that the algorithm remains a strong performer even if the local search component is removed.
 </sub></sub></sub>
 
 ---
@@ -447,6 +442,14 @@ The Hill Climbing Heuristic combines Dsatur, local search and the first fit heur
 6. Run the <u>first fit heuristic</u> and go back to 2
 </code>
 </div>
+</div>
+
+---
+
+## Comparison between HC, HEA and other algorithms found in literature
+
+<div class="himg">
+    <img width="65%" src="img/hc_vs_hea.png">
 </div>
 
 ---
@@ -486,11 +489,11 @@ JPL is a classical coloring algorithm ideated in 1993 by Jones and Plassman, the
 
 ## Cohen Castonguay \[Coh12\]
 
-The Cohen-Castonguay algorithm is a different spin of the JPL that modifies the procedure used to construct the independent set.
+The Cohen-Castonguay algorithm is a different spin of JPL that modifies the procedure used to construct the independent set.
 
 Instead of using memory to store the random number associated to each vertex we identify a set of $k$ different hash functions.
 
-This approach is much faster than accessing memory, but increases the complexity of the algorithm because it's now necessary to identify a good value for $k$ and then the coloring information needs to be combined, to do so we can use many different heuristics (e.g. embewing an ordering in the hash function list).
+This approach is much faster than accessing memory, at the cost of having to choose a good number of hash functions $k$ as well as having to find a good heuristic to combine the coloring information (e.g. we could impose an ordering to the hash functions list).
 
 ---
 
@@ -510,9 +513,9 @@ The key aspects leveraged by Yuxin et al. are: Barrier relaxation, worker size, 
 
 ## Atos vs Gunrock \[Yux22\]
 
-Atos is compared to the BSP framework Gunrock (which was first revealed in 2018), and the performance can be quite a bit better, despite the drawbacks of the reuse approach required by the speculative behavior of the algorithms.
+Atos is compared to the BSP framework Gunrock (which was first revealed in 2018), and the images below show a performance uplift, despite the good number of recalculations required by the nondeterministic approach of the framework.
 
-In the images below we see the compute time of different configurations for the Atos framework compared with a simulation of Gunrock (left), in ms, and the amount of repeated calculations due to speculation on the right.
+Below we can see the compute time of different configurations for the Atos framework compared with a simulation of Gunrock (left), in ms, and the amount of repeated calculations due to speculation on the right.
 
 <div class="himg" style="margin-top:30px">
     <img width="50%" src="img/runtimes_atos.png">
@@ -551,6 +554,12 @@ In the images below we see the compute time of different configurations for the 
 **\[Coh12\]** :: Cohen, J.; Castonguay, P.; *Efficient Graph Matching and Coloring on the GPU* 2012 GPU Tech., GTC on-demand
 
 **\[Yux22\]** :: Chen, Yuxin; Brock, Benjamin; Porumbescu, Serban; Buluc, Aydin; Yelick, Catherine; Owens, John; *Atos: a task-parallel GPU scheduler for graph analytics* 2023 Proceedings of the 51st international conference on parallel processing, Association for Computing Machinery [doi](https://doi.org/10.1145/3545008.3545056)
+
+---
+
+## Sources (cont'd)
+
+**\[Nau15\]** :: Naumov, M.; Arsaev, M.; Castonguay, P.; Cohen, J.; Demouth, J.; Eaton, J.; Layton, S.; Markovskiy, N.; Reguly, I.; Sakharnykh, N.; Sellappan, V.; Strzodka, R.; *AMGX: A library for GPU accelerated algebraic multigrid and preconditioned iterative methods* 2015 SIAM Journal on Scientific Computing pp S602-S626 [doi](https://doi.org/10.1137/140980260)
 
 ---
 
