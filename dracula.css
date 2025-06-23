@@ -361,13 +361,13 @@ div.himg {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #FBD603;
+  /*background-color: #FBD603;*/
   flex-direction: row;
 }
 
 div.vimg {
   display: flex;
   justify-content: center;
-  background-color: #ABBAEA;
+  /*background-color: #ABBAEA;*/
   flex-direction: column;
 }
