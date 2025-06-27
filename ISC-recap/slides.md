@@ -45,12 +45,6 @@ A recap of what I discovered during ISC attendance
 
 ---
 
-<!-- _class: centered -->
-
-<img src="./img/llm_training.png">
-
----
-
 ## What are parameters?
 
 - The weights, which control how information propagates between layers.
@@ -62,7 +56,7 @@ A recap of what I discovered during ISC attendance
 - Layer normalization weights.
 
 
-- The embedding matrices, which are matrices $W_{emb} \in \mathbb{R}^{|V|\times d}$, where $|V|$ is the size of the vocabulary and $d$ the dimensionality of the associated vector representation.
+- The embedding matrices, $W_{emb} \in \mathbb{R}^{|V|\times d}$, where $|V|$ is the size of the vocabulary and $d$ the dimensionality of the associated vector representation.
 
 ---
 
@@ -74,14 +68,11 @@ A recap of what I discovered during ISC attendance
 
 ## Multimodality
 
-Now flagship models are boasting multimodal capacities, which translates to the possibility of the model to manipulate different forms of media:
+Now flagship models are boasting multimodal capacities, therefore the model is able to manipulate different forms of media:
 
 - Text
-
 - Audio
-
 - Video
-
 - Images
 
 This can be done through the same A/D architecture by predicting the next most probable byte in the sequence (for example for images) another archetype that is rapidly gaining traction is the one of Diffusion Models.
@@ -110,48 +101,55 @@ ___
 
 ## How to effectively generate code with LLMs
 
-###### Reminder: if we are working with a language that doesn't have a high usage rate then the result is going to be heavily affected by that (e.g. newer c++ standards).
+###### Reminder: if we are working with a language that doesn't have a high usage rate then the result is going to be heavily affected (e.g. newer c++ standards).
 
 Example applied to the linear heat diffusion equation.
 
 ---
 
-## Start by asking the LLM the heat diffusion equation in 1D
+<!-- _class: centered -->
 
 <img src="./img/heat_1.png">
 
 ___
 
-## Ask the LLM to provide a solution for the problem using an initial condition
+<!-- _class: centered -->
 
 <img src="./img/heat_2.png">
 
 ___
 
-
-## Ask the LLM to provide a numerical solution
+<!-- _class: centered -->
 
 <img src="./img/heat_3.png">
 
 ___
 
-## Ask the LLM to generate Python code for the chosen method
+<!-- _class: centered -->
 
 <img src="./img/heat_4.png">
 
 ___
 
-## It's possible to change the configuration by asking the LLM to utilize a different framework like PETSc
+<!-- _class: centered -->
 
 <img src="./img/heat_5.png">
 
 ___
 
-## Results
+<!-- _class: centered -->
 
 <img src="./img/heat_6.png">
 
 ___
+
+## Main takeaways
+
+1. Claude is capable to generate code that can solve the problem with a high level of accuracy (absolute error between $10^{-10}$ and $10^{-18}$).
+2. It's an extremely easy problem, probably fished some solutions from *training memory*, therefore this is not as indicative as it might be regarding real world performance.
+3. The process that took from beginning of the problem to solution involved a series of steps that made each task easier for the LLM.
+
+---
 
 <!-- _class: centered -->
 
@@ -171,11 +169,11 @@ Found better algorithms for:
 
 1. Data center scheduling,
 
-2. Highly optimized arithmetic circuit for matrix multiplication in TPU
+2. Highly optimized arithmetic circuit for matrix multiplication in TPU,
 
-3. Flash Attention kernel implementation in Transformer
+3. Flash Attention kernel implementation in Transformer,
 
-3. Matrix Multiplications (improved Strassen algorithm for 4x4)
+3. Matrix Multiplications (improved Strassen algorithm for 4x4) \[Nov25\].
 
 ---
 
@@ -196,18 +194,6 @@ ___
 <img src="./img/good_prompting.png">
 
 ___
-
-## Good prompting strategies
-
-- Use special characters whenever we are prompting.
-
-- Specify how long the response has to be.
-
-- Specify the format of the output (e.g. it's possible to talk an LLM into outputting JSON).
-
-- As we saw with the example of the heat diffusion it's important to decompose a complex task into a series of easier tasks, two classical approaches in this context are *prompt chaining* and *Chain of thought*.
-
----
 
 <!-- _class: centered -->
 
@@ -255,6 +241,12 @@ ___
 
 <!-- _class: centered -->
 
+<img src="./img/advanced_math.png">
+
+---
+
+<!-- _class: centered -->
+
 <img src="./img/what_to_test.png">
 
 ---
@@ -263,20 +255,20 @@ ___
 
 ## The machine learning problem
 
-Suppose we train a model $\mathcal{M}$ on a set $T$, when we analyze the performance of such model it's important that the dataset utilized to do so $V$ doesn't contain samples from $T$, otherwise the model will already know the ground truth for such test samples and therefore will make the utilizer overconfident in the model's abilities.
+Suppose we train a model $\mathcal{M}$ on a set $T$, when we analyze the performance of such model it's important that the dataset utilized $V$ doesn't contain samples from $T$, otherwise the model will already know the ground truth for such test samples and therefore the performance analysis will return an overconfident estimate of the model's capabilities.
 
 ---
 
 ## How to test
 
-LLMs can be asked to reply to multiple choice questions or questions that require the generation of a short essay evaluating how specific or how broad the knowledge of the model is, as well as its ability to reason on a certain task.
+LLMs can be asked to reply to multiple choice questions or questions that require the generation of a short essay, this leads to an analysis of how how specific or broad the knowledge of the model is, as well as its ability to reason on a certain task.
 
-Some classical ways of evaluating the performance:
+Some classical ways of evaluating performance are:
 
 - 0 shot evaluation,
-- 1-5 shot evaluation,
-- Joint performance evaluation for multiple answer questions,
-- Present the answers to the question separately.
+- 1-5 shot evaluation (few shot),
+- Joint performance evaluation for multiple choice,
+- Multiple choice but split the answers in different prompts.
 
 ---
 
@@ -300,19 +292,7 @@ Some classical ways of evaluating the performance:
 
 <!-- _class: centered -->
 
-<img src="./img/advanced_math.png">
-
----
-
-<!-- _class: centered -->
-
 <img src="./img/uncertainty.png">
-
----
-
-<!-- _class: centered -->
-
-<img src="./img/uncertainty_measures.png">
 
 ---
 
@@ -322,7 +302,7 @@ At the current stage of this technology uncertainty is a very important topic be
 
 1. LLMs hallucinate and tend on giving confident responses even if they have no clue what they are talking about.
 
-2. Chain of thought and other frameworks suggest to use multiple different prompts to make the answer better, but what happens to the uncertainty of the answer? How does it propagate between one prompt and the other?
+2. Chain of thought and other frameworks suggest to use multiple different prompts to make the answer better, but what happens to the uncertainty of the answer? Since successive prompts are not independent from each other, how can we modellize uncertainty propagation?
 
 ---
 
@@ -379,3 +359,42 @@ At the current stage of this technology uncertainty is a very important topic be
 <img src="./img/example_workflow.png">
 
 ---
+
+## Sources
+
+**\[Nov25\]** :: Alexander Novikov et al.; *AlphaEvolve: A coding agent for scientific and algorithmic discovery* June 2025 Arxiv preprint [doi](https://doi.org/10.48550/arXiv.2506.13131)
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- _class: centered -->
+
+<img src="./img/llm_training.png">
+
+---
+
