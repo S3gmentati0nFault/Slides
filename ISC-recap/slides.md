@@ -361,6 +361,7 @@ At the current stage of this technology uncertainty is a very important topic be
 ---
 
 <!-- _class: centered -->
+
 ## An Introduction to Developing Highly Parallel Applications Using C++ and SYCL
 
 ---
@@ -480,18 +481,82 @@ class MyKernel {
 ## SYCL kernel as a lambda function
 
 ```c++
-sycl::buffer buf = /* normal init */;
-float * output = sycl::malloc_device(/* params */);
+  sycl::buffer buf = /* normal init */;
+  float * output = sycl::malloc_device(/* params */);
 
-... queue submit as normal ...
+  ... queue submit as normal ...
 
-auto acc = buf.get_access(h);
-auto func = [=](sycl::item<1> i) {
-  acc[i] = someVal;
-  output[i.get_global_linear_id()] = someOtherVal;
-});
-handler.parallel_for(range, func);
+  auto acc = buf.get_access(h);
+  auto func = [=](sycl::item<1> i) {
+    acc[i] = someVal;
+    output[i.get_global_linear_id()] = someOtherVal;
+  });
+  handler.parallel_for(range, func);
 ```
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/work-item-exec.png">
+
+---
+
+## Synchronization
+
+- While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among differenc work groups in the nd-range.
+
+- No synchronization is allowed between work-items.
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/memory-model.png">
+
+---
+
+## Accessing data with accessors
+
+- Memory access for buffer / accessor can be done via raw pointers or nested subscript (e.g. `acc[x][y][z]`)
+
+```c++
+sycl::buffer<int> buf_a {a, dataSize};
+sycl::buffer<int> buf_b {b, dataSize};
+sycl::buffer<int> buf_r {r, dataSize};
+
+q.submit([&] (sycl::handler& h) {
+    sycl::stream out(1024, 256, h); 
+
+    sycl::accessor a_acc {buf_a, h, sycl::read_only};
+    sycl::accessor b_acc {buf_b, h, sycl::read_only};
+    sycl::accessor r_acc {buf_r, h, sycl::read_write};
+
+    h.parallel_for<class mykernel> (sycl::nd_range<1>{sycl::range{32}, sycl::range{64}}, [=](sycl::nd_item<1> i) {
+        // Get the id of the work item in the global nd-grid
+        sycl::id globalID = i.get_global_id();
+        r_acc[globalID] = a_acc[globalID] + b_acc[globalID]; 
+    });
+}).wait()
+```
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/data_dependency_1.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/data_dependency_2.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/concurrent_data_flow.png">
 
 ---
 
