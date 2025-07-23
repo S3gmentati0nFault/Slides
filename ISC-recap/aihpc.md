@@ -22,6 +22,8 @@ style: |
 
 "I checked it very thoroughly," said the computer, "and that quite definitely is the answer. I think the problem, to be quite honest with you, is that you've never actually known what the question is.” 
 
+~ Douglas Adams, _The Hitchhiker's Guide to the Galaxy_
+
 ---
 
 <!-- _class: centered -->
