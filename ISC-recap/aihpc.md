@@ -274,6 +274,28 @@ At the current stage of this technology uncertainty is a very important topic be
 
 ---
 
-## Sources
+## Use AI to...
+
+- Create rubrics to evaluate ideas and the code we have written.
+
+- Generate testing code and boilerplate, maybe in conjunction with some python code.
+
+- AI as a judge for our ideas, or using it to have a conversation with other papers (e.g. Stanford STORM \[Strm\]) generating roundtables that can be a valid alternative when talking with another person is not possible.
+
+- Rewording, rephrasing and text correction.
+
+- Enhanced Documentation crawler (albeit with the problem of not being up-to-date).
+
+---
+
+<!-- _class: centered -->
+
+## If you want to, think alongside it, but don't make it think for you.
+
+---
+
+## Resources
 
 **\[Nov25\]** :: Alexander Novikov et al.; *AlphaEvolve: A coding agent for scientific and algorithmic discovery* June 2025 Arxiv preprint [doi](https://doi.org/10.48550/arXiv.2506.13131)
+
+**\[Strm\]** :: Stanford Storm [website](https://storm.genie.stanford.edu)
