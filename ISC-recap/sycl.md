@@ -28,9 +28,15 @@ style: |
 
 ---
 
-- SYCL offers interoperability with a wide variety of backends and devices, some of the most notable available are OpenCL, CUDA, HIP, OpenMP.
-- SYCL offers high level abstractions that work independently of the platform the code is being run on.
-- SYCL 2020 is based on the 2017 standard for C++. It has no `pragma`, language extensions or mandatory attributes.
+## SYCL compilers
+
+<div class="himg">
+  <ul>
+  <li> SYCL 2020 is based on the 2017 standard for C++. It has no `pragma`, language extensions or mandatory attributes.
+  <li> Since SYCL is an open standard there are many different alternatives for the compilers, each comes with its own strengths and weaknesses (e.g. some compilers support CUDA, while others don't).
+  </ul>
+  <img src="./img/sycl-compilers.png">
+</div>
 
 ---
 
@@ -46,27 +52,68 @@ style: |
 
 ---
 
-<!-- _class: centered -->
+## SYCL programming model \[Enccs\]
 
-<img src="./img/sycl-queues.png">
+- A _Queue_ dispatches work to our devices.
+- _Actions_ is work that needs to be processed.
+- Within the actions we execute _kernels_, which are executed asynchronously.
+
+```c++
+// Queue declaration
+sycl::queue Q;
+const auto size = /* Some size */
+int *result = sycl::malloc_shared<int>(sz, Q);
+
+// Adding an action to the queue
+Q.parallel_for(
+  range<1> { sz },
+  [=] (id<1> tid) {
+    result[tid[0]] -= 1;
+  }
+).wait()
+```
 
 ---
 
 ## Memory models
 
-SYCL has two different ways of managing data:
+SYCL has three different ways of managing data:
 - buffer / accessor,
-- Unified Shared Memory.
-
-While during the speech we used the buffer / accessor model the speakers stressed the concept that buffer accessors are a very useful high-level abstraction to get started, but once things get serious they become pretty much useless.
-
-The buffer / accessor model in SYCL leverages lazy memory movement so that informations are passed ot the device only once the device really needs them.
+- Unified Shared Memory,
+- Images, which are very similar to buffer / accessor and tailored to image processing.
 
 ---
 
-<!-- _class: centered -->
+## Buffer accessor model
 
-<img src="./img/buffer-accessor.png">
+The buffer / accessor model in SYCL leverages lazy memory movement so that information are passed to the device only once the device really needs them.
+
+<div class="himg">
+  <img src="./img/buffer.png">
+</div>
+
+A buffer object “tells” the runtime how the data is laid out, the accessor “tells” it how we the memory is going to be read and written. Defining an accessor is equal to defining data dependencies between tasks \[Enccs\].
+
+---
+
+## Buffer accessor model, cont'd
+
+The accessor requires:
+
+- A buffer to read from,
+- A handler,
+- An access mode,
+- A property list which affects the semantics of the accessor.
+
+```c++
+buffer<double> A{range{42}};
+
+Q.submit([&](handler &cgh){
+   // We discard any references to previous eventual previous values contained in the accessor
+   auto aAA = accessor(A, cgh, write_only, no_init);
+});
+```
+
 
 ---
 
@@ -88,6 +135,14 @@ event queue::memcpy(void* dest, const void* src, size_t numBytes, const std::vec
 void free(void* ptr, queue& syclQueue);
 ```
 
+There are many more operations, which can be found on \[KrUSM\].
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/ba-vs-usm.png">
+
 ---
 
 ## SYCL execution model
@@ -108,8 +163,7 @@ SYCL's execution model rips off NVIDIA's execution model following a similar str
 
 ## SYCL kernel as function object
 
-SYCL kernels can be expressed either as lambdas or as function objects, kernel arguments are passed
-as capture targets or as data members.
+SYCL kernels can be expressed either as lambdas or as function objects, kernel arguments are passed as capture targets or as data members.
 
 ```c++
 class MyKernel {
@@ -154,7 +208,7 @@ class MyKernel {
 
 ## Synchronization
 
-- While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among differenc work groups in the nd-range.
+- While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among different work groups in the nd-range.
 
 - No synchronization is allowed between work-items.
 
@@ -211,35 +265,7 @@ q.submit([&] (sycl::handler& h) {
 
 ---
 
+## Resources
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- _class: centered -->
-
-<img src="./img/llm_training.png">
-
----
-
+\[Enccs\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
+\[KrUSM\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
