@@ -26,6 +26,22 @@ style: |
 
 ---
 
+## The tutorial
+
+The speakers for the tutorial were all part of the Argonne National Laboratory:
+
+- [Franck Cappello](https://www.anl.gov/profile/franck-cappello)
+- [Robert Underwood](https://www.anl.gov/profile/robert-underwood)
+- [Sandeep Madireddy](https://www.anl.gov/profile/sandeep-madireddy)
+
+The scope of the tutorial was articulated in two different objectives:
+1. discover how to leverage LLMs to assist and advance HPC research, 
+2. establish best practices for evaluating LLMs within the HPC context.
+
+The full lecture materials are still available on [google drive](https://tinyurl.com/27suz4k3)
+
+---
+
 <!-- _class: centered -->
 
 ## Introduction to LLMs
@@ -33,6 +49,7 @@ style: |
 ---
 
 ## What are parameters?
+###### Open problem :: Training these models is a huge environmental and computational problem.
 
 - The weights, which control how information propagates between layers.
 
@@ -144,6 +161,14 @@ Found better algorithms for:
 
 ---
 
+## Why could this be relevant?
+
+1. It proves that vibe-coding works, as long as it's being done with a logic and the pipeline is fast enough,
+2. The machine can produce highly usable translations from one framework to another, while retaining good efficiency. Could it be possible to have an LLM translate code in real time for a production system (as long as peak performance is not necessary)?
+3. I definitely can see LLMs being used to port code, or to move large codebases that are, for example, still written in Fortran, to new and faster versions based on C++ frameworks.
+
+---
+
 <!-- _class: centered -->
 
 ## Prompting
@@ -191,15 +216,17 @@ ___
 
 <!-- _class: centered -->
 
-## The machine learning problem
+## Why is this important?
+###### Open problem :: the machine learning problem
 
 Suppose we train a model $\mathcal{M}$ on a set $T$, when we analyze the performance of such model it's important that the dataset utilized $V$ doesn't contain samples from $T$, otherwise the model will already know the ground truth for such test samples and therefore the performance analysis will return an overconfident estimate of the model's capabilities.
 
 ---
 
 ## How to test
+###### Open problem :: How can we test effectively LLMs?
 
-LLMs can be asked to reply to multiple choice questions or questions that require the generation of a short essay, this leads to an analysis of how how specific or broad the knowledge of the model is, as well as its ability to reason on a certain task.
+LLMs can be asked to reply to multiple choice questions or questions that require the generation of a short essay, this leads to an analysis of how specific or broad the knowledge of the model is, as well as its ability to reason on a certain task.
 
 Some classical ways of evaluating performance are:
 
@@ -223,6 +250,7 @@ Some classical ways of evaluating performance are:
 ---
 
 ## Handling uncertainty in LLMs
+###### Open problem :: how to quantify uncertainty within LLMs
 
 At the current stage of this technology uncertainty is a very important topic because:
 
@@ -288,6 +316,15 @@ At the current stage of this technology uncertainty is a very important topic be
 
 ---
 
+## Long-term effects of AI in the world of research
+
+- Very hard to predict, as was said until now it's possible to use AI tools to augment the effects of research, but it's not possible to make AI work for us.
+- AI's performance is strongly reliant on the quality of the data used for training, the amount of high quality data available is scarce by now, what can be done to overcome this is use GANs and other more powerful models to generate new data from scratch, which lacks the variety of real-world examples.
+- In the field of HPC and coding in general we are going to see a surging rise in the use of AI to produce code skeletons that are later expanded and further improved by users.
+- While vibe coding seems to be extremely powerful in the hands of an AI agent it can be very detrimental for the developers using it.
+
+---
+
 <!-- _class: centered -->
 
 ## If you want to, think alongside it, but don't make it think for you.
@@ -299,3 +336,11 @@ At the current stage of this technology uncertainty is a very important topic be
 **\[Nov25\]** :: Alexander Novikov et al.; *AlphaEvolve: A coding agent for scientific and algorithmic discovery* June 2025 Arxiv preprint [doi](https://doi.org/10.48550/arXiv.2506.13131)
 
 **\[Strm\]** :: Stanford Storm [website](https://storm.genie.stanford.edu)
+
+---
+
+## Vibe coding
+
+According to [Wikipedia](https://en.wikipedia.org/wiki/Vibe_coding):
+
+"Vibe coding is an artificial intelligence-assisted software development style popularized by Andrej Karpathy in early 2025. It describes a fast, improvisational, collaborative approach to creating software where the developer and a large language model (LLM) tuned for coding are acting rather like pair programmers in a conversational loop. Unlike traditional AI-assisted coding or prompt engineering, vibe coding emphasizes staying in a creative flow: the human developer avoids micromanaging the code, accepts AI-suggested completions liberally, and focuses more on iterative experimentation than code correctness or structure."
