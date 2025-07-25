@@ -114,6 +114,53 @@ Q.submit([&](handler &cgh){
 });
 ```
 
+---
+
+## Accessing an accessor
+
+Given a set of buffers
+
+```c++
+sycl::buffer<float, 1> buf_a (dA.data(), sycl::range<1>(dA.size()));
+sycl::buffer<float, 1> buf_b (dB.data(), sycl::range<1>(dB.size()));
+sycl::buffer<float, 1> buf_r (dR.data(), sycl::range<1>(dR.size()));
+```
+
+We can use the accessors by using the `sycl::id`, which represents a position within the nd-range.
+
+```c++
+gpuQueue.submit([&](sycl::handler &cgh){
+  sycl::accessor inA{buf_a, cgh, sycl::read_only};
+  sycl::accessor inB{buf_b, cgh, sycl::read_only};
+  sycl::accessor r{buf_r, cgh, sycl::write_only};
+  cgh.parallel_for<add>(sycl::range<1>(dA.size()),
+    [=](sycl::id<1> i){
+    r[i] = inA[i] + inB[i];
+  }); 
+});
+```
+
+---
+
+## Accessing an accessor, cont'd
+
+Or we can use raw-pointers, which will be accessed using the 'manually' linearized id (the position is computed using row-major-order).
+
+```c++
+// Using the same buffers as before
+gpuQueue.submit([&](handler &cgh){
+  sycl::accessor inA{buf_a, cgh, sycl::read_only};
+  sycl::accessor inB{buf_b, cgh, sycl::read_only};
+  sycl::accessor r{buf_r, cgh, sycl::write_only};
+  cgh.parallel_for<add>(rng, [=](sycl::item<3> i){
+    auto ptrA = inA.get_pointer();
+    auto ptrB = inB.get_pointer();
+    auto ptrO = out.get_pointer();
+    auto linearId = i.get_linear_id();
+    ptrA[linearId] = ptrB[linearId] + ptrO[linearId];
+  });
+});
+```
 
 ---
 
@@ -136,6 +183,12 @@ void free(void* ptr, queue& syclQueue);
 ```
 
 There are many more operations, which can be found on \[KrUSM\].
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/ba-vs-usm2.png">
 
 ---
 
@@ -216,7 +269,68 @@ class MyKernel {
 
 <!-- _class: centered -->
 
+<img width="700px" src="./img/sycl-memory-model.png">
+
+---
+
+<!-- _class: centered -->
+
 <img src="./img/memory-model.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/data_dependency_1.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/data_dependency_2.png">
+
+---
+
+## Translation of the data flow
+
+`kernel_a` and `kernel_b` access the same buffer `buf`, therefore a data dependency is constructed among the two devices, which are identified via the respective `sycl::handler`.
+
+```c++
+buf = sycl::buffer(data, sycl::range{1024});
+gpuQueue.submit([&](sycl::handler &cgh) {
+  // The accessor describes how data is accessed, the buffer infers data dependencies
+  sycl::accessor acc {buf, cgh};
+  cgh.parallel_for<kernel_a>(sycl::range{1024},
+    [=](sycl::id<1> idx) {
+      acc[idx] = /* some computation */
+    }); });
+gpuQueue.submit([&](sycl::handler &cgh) {
+  sycl::accessor acc {buf, cgh};
+  cgh.parallel_for<kernel_b>(sycl::range{1024},
+    [=](sycl::id<1> idx) {
+      acc[idx] = /* some computation */
+    }); });
+gpuQueue.wait();
+```
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/concurrent_data_flow.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/ba-modes.png">
+
+---
+
+## Resources
+
+\[Enccs\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
+\[KrUSM\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
 
 ---
 
@@ -243,29 +357,3 @@ q.submit([&] (sycl::handler& h) {
     });
 }).wait()
 ```
-
----
-
-<!-- _class: centered -->
-
-<img src="./img/data_dependency_1.png">
-
----
-
-<!-- _class: centered -->
-
-<img src="./img/data_dependency_2.png">
-
----
-
-<!-- _class: centered -->
-
-<img src="./img/concurrent_data_flow.png">
-
-
----
-
-## Resources
-
-\[Enccs\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
-\[KrUSM\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
