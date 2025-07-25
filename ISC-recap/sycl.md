@@ -16,6 +16,20 @@ style: |
 
 ---
 
+## The tutorial
+
+The speakers for the tutorial were part of different groups:
+
+- [Rod Burns](https://www.linkedin.com/in/roderickburns/), from Codeplay Software,
+- [Biagio Cosenza](https://www.cosenza.eu/), from University of Salerno,
+- [Attila Krasznahorkay](https://inspirehep.net/authors/1070870), from University of Massachusetts Amherst,
+
+Introduction to the SYCL programming model by heavy hands-on sessions.
+
+The material shown during the lecture, and more, can be found on the Codeplay [github](https://github.com/codeplaysoftware/syclacademy) page.
+
+---
+
 <!-- _class: centered -->
 
 <img src="./img/what-is-sycl.png">
@@ -55,7 +69,7 @@ style: |
 ## SYCL programming model \[Enccs\]
 
 - A _Queue_ dispatches work to our devices.
-- _Actions_ is work that needs to be processed.
+- _Actions_ is work that needs to be processed, actions are associated to queues and therefore are assigned to specific devices.
 - Within the actions we execute _kernels_, which are executed asynchronously.
 
 ```c++
@@ -81,6 +95,13 @@ SYCL has three different ways of managing data:
 - buffer / accessor,
 - Unified Shared Memory,
 - Images, which are very similar to buffer / accessor and tailored to image processing.
+
+---
+
+<!-- _class: centered -->
+
+## Interesting bit number 1
+###### The buffer-accessor abstraction
 
 ---
 
@@ -126,7 +147,7 @@ sycl::buffer<float, 1> buf_b (dB.data(), sycl::range<1>(dB.size()));
 sycl::buffer<float, 1> buf_r (dR.data(), sycl::range<1>(dR.size()));
 ```
 
-We can use the accessors by using the `sycl::id`, which represents a position within the nd-range.
+We can use the accessors by using the `sycl::id`, which represents a position within a nd-range (more on this later).
 
 ```c++
 gpuQueue.submit([&](sycl::handler &cgh){
@@ -164,6 +185,14 @@ gpuQueue.submit([&](handler &cgh){
 
 ---
 
+## Why should we care?
+
+- Buffer accessor defines data dependencies between kernels for us, and is able to infer the structure of the dependency graph on its own based on accessor modes.
+- The Buffer-accessor seems to be quite smart and work seamlessly as long as we are not doing anything too complicated.
+- I would need to actually use SYCL for some time before being able to give a better analysis of the instrument.
+
+---
+
 <!-- _class: centered -->
 
 <img src="./img/usm-malloc-device.png">
@@ -188,7 +217,7 @@ There are many more operations, which can be found on \[KrUSM\].
 
 <!-- _class: centered -->
 
-<img src="./img/ba-vs-usm2.png">
+<img src="./img/ba-vs-usm-2.png">
 
 ---
 
@@ -261,9 +290,7 @@ class MyKernel {
 
 ## Synchronization
 
-- While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among different work groups in the nd-range.
-
-- No synchronization is allowed between work-items.
+While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among different work groups in the nd-range.
 
 ---
 
@@ -327,10 +354,21 @@ gpuQueue.wait();
 
 ---
 
+## Concluding thoughts
+
+Why would we like to use SYCL?
+
+- If we are writing multi-platform code this could be a very good tool, but it comes with some evident drawbacks: (1) Since it's an open standard, there are many different SYCL distributions, making it harder to choose one over the other, (2) SYCL is likely going to perform worse than native counterparts.
+- On the bright side, I was talking with Prof. Krasznahorkay at the conference, and he said that SYCL is being widely used in big research centers like CERN. This is also corroborated by the long-lasting cooperation between Intel and CERN for the Atlas experiment \[Atlas\].
+
+---
+
 ## Resources
 
 \[Enccs\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
 \[KrUSM\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
+
+\[Atlas\] :: The Atlas Experiment Implements Heterogeneous Particle Reconstruction with Intel oneAPI Tools [website](https://atlas.cern/Discover/Detector/Software-Computing/Intel-Case-Study)
 
 ---
 
