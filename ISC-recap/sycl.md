@@ -32,25 +32,13 @@ The material shown during the lecture, and more, can be found on the Codeplay [g
 
 <!-- _class: centered -->
 
-<img src="./img/what-is-sycl.png">
+## Introduction to SYCL
 
 ---
 
 <!-- _class: centered -->
 
-<img src="./img/sycl-compile.png">
-
----
-
-## SYCL compilers
-
-<div class="himg">
-  <ul>
-  <li> SYCL 2020 is based on the 2017 standard for C++. It has no `pragma`, language extensions or mandatory attributes.
-  <li> Since SYCL is an open standard there are many different alternatives for the compilers, each comes with its own strengths and weaknesses (e.g. some compilers support CUDA, while others don't).
-  </ul>
-  <img src="./img/sycl-compilers.png">
-</div>
+<img src="./img/what-is-sycl.png">
 
 ---
 
@@ -62,11 +50,29 @@ The material shown during the lecture, and more, can be found on the Codeplay [g
 
 <!-- _class: centered -->
 
+<img src="./img/sycl-compile.png">
+
+---
+
+<!-- _class: centered -->
+
 <img src="./img/sycl-compile-model.png">
 
 ---
 
-## SYCL programming model \[Enccs\]
+## SYCL compilers
+
+<div class="himg">
+  <ul>
+  <li> SYCL 2020 is based on the 2017 standard for C++. It has no <code>pragma</code>, language extensions or mandatory attributes.
+  <li> Since SYCL is an open standard there are many different alternatives for the compilers, each comes with its own strengths and weaknesses (e.g. some compilers support CUDA, while others don't).
+  </ul>
+  <img src="./img/sycl-compilers.png">
+</div>
+
+---
+
+## SYCL programming model \[1\]
 
 - A _Queue_ dispatches work to our devices.
 - _Actions_ is work that needs to be processed, actions are associated to queues and therefore are assigned to specific devices.
@@ -89,6 +95,14 @@ Q.parallel_for(
 
 ---
 
+<!-- _class: centered -->
+
+## Accessing data in SYCL
+
+#### Buffer / accessors
+
+---
+
 ## Memory models
 
 SYCL has three different ways of managing data:
@@ -101,7 +115,7 @@ SYCL has three different ways of managing data:
 <!-- _class: centered -->
 
 ## Interesting bit number 1
-###### The buffer-accessor abstraction
+###### The buffer / accessor abstraction
 
 ---
 
@@ -113,7 +127,7 @@ The buffer / accessor model in SYCL leverages lazy memory movement so that infor
   <img src="./img/buffer.png">
 </div>
 
-A buffer object “tells” the runtime how the data is laid out, the accessor “tells” it how we the memory is going to be read and written. Defining an accessor is equal to defining data dependencies between tasks \[Enccs\].
+A buffer object “tells” the runtime how the data is laid out, the accessor “tells” it how we the memory is going to be read and written. Defining an accessor is equal to defining data dependencies between tasks \[1\].
 
 ---
 
@@ -195,6 +209,14 @@ gpuQueue.submit([&](handler &cgh){
 
 <!-- _class: centered -->
 
+## Accessing data in SYCL
+
+#### Unified Shared Memory
+
+---
+
+<!-- _class: centered -->
+
 <img src="./img/usm-malloc-device.png">
 
 ---
@@ -211,7 +233,7 @@ event queue::memcpy(void* dest, const void* src, size_t numBytes, const std::vec
 void free(void* ptr, queue& syclQueue);
 ```
 
-There are many more operations, which can be found on \[KrUSM\].
+There are many more operations, which can be found on \[2\].
 
 ---
 
@@ -224,6 +246,12 @@ There are many more operations, which can be found on \[KrUSM\].
 <!-- _class: centered -->
 
 <img src="./img/ba-vs-usm.png">
+
+---
+
+<!-- _class: centered -->
+
+## Parallelism in SYCL and memory access
 
 ---
 
@@ -240,6 +268,30 @@ SYCL's execution model rips off NVIDIA's execution model following a similar str
 <!-- _class: centered -->
 
 <img src="./img/sycl-nd-range.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/work-item-exec.png">
+
+---
+
+<!-- _class: centered -->
+
+<img width="700px" src="./img/sycl-memory-model.png">
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/memory-model.png">
+
+---
+
+<!-- _class: centered -->
+
+## Defining Kernels
 
 ---
 
@@ -282,27 +334,9 @@ class MyKernel {
 
 ---
 
-<!-- _class: centered -->
-
-<img src="./img/work-item-exec.png">
-
----
-
 ## Synchronization
 
 While SYCL allows synchronization within a work group, just like CUDA does with its synchronization primitives, SYCL doesn't allow the synchronization among different work groups in the nd-range.
-
----
-
-<!-- _class: centered -->
-
-<img width="700px" src="./img/sycl-memory-model.png">
-
----
-
-<!-- _class: centered -->
-
-<img src="./img/memory-model.png">
 
 ---
 
@@ -354,21 +388,58 @@ gpuQueue.wait();
 
 ---
 
+<!-- _class: centered -->
+
+## Closing thoughts and the CERN example
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/tracker.png">
+
+---
+
+## Tracking \[4\]
+
+Particle tracking is an extremely complicated topic. At its core the task consists in the numerical resolution of the equation of motion.
+$$
+\frac{d^2 \vec{r}}{ds^2} = \frac{q}{p} \left(\frac{d\vec{r}}{ds} \times \vec{B}(\vec{r})\right) = f\left(s, \vec{r}, \frac{d\vec{r}}{ds}\right)
+$$
+
+<div class="himg">
+  <img width="700px" src="./img/tracking_LHC.png">
+</div>
+
+---
+
+<!-- _class: centered -->
+
+<img src="./img/SYCL-vs-CUDA.png">
+
+---
+
 ## Concluding thoughts
 
-Why would we like to use SYCL?
+What should we consider when we talk SYCL?
 
-- If we are writing multi-platform code this could be a very good tool, but it comes with some evident drawbacks: (1) Since it's an open standard, there are many different SYCL distributions, making it harder to choose one over the other, (2) SYCL is likely going to perform worse than native counterparts.
-- On the bright side, I was talking with Prof. Krasznahorkay at the conference, and he said that SYCL is being widely used in big research centers like CERN. This is also corroborated by the long-lasting cooperation between Intel and CERN for the Atlas experiment \[Atlas\].
+- SYCL is open source and is a standard, tomorrow we could begin working on our own compiler, specifically tailored to our needs.
+
+- If we are writing multi-platform code this could be a very good tool, but it comes with some evident drawbacks: (1) Since it's an open standard, there are many different SYCL distributions, (2) SYCL might perform worse than native counterparts (e.g. Native CUDA running on Nvidia GPU).
+
+- On the bright side, SYCL is the parallelization technique used at CERN to abstract from the underlying hardware \[3\], if a research center as large as that one is willing to bet on SYCL, then there should not be any concerns as far as the future-proofness of the model.
 
 ---
 
 ## Resources
 
-\[Enccs\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
-\[KrUSM\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
+\[1\] :: Heterogeneous Programming with SYCL; EuroCC National Competence Centre Sweden [website](https://enccs.github.io/sycl-workshop/what-is-sycl/) 
 
-\[Atlas\] :: The Atlas Experiment Implements Heterogeneous Particle Reconstruction with Intel oneAPI Tools [website](https://atlas.cern/Discover/Detector/Software-Computing/Intel-Case-Study)
+\[2\] :: Unified shared memory (USM); Khronos [website](https://github.khronos.org/SYCL_Reference/usm.html)
+
+\[3\] :: The Atlas Experiment Implements Heterogeneous Particle Reconstruction with Intel oneAPI Tools [website](https://atlas.cern/Discover/Detector/Software-Computing/Intel-Case-Study)
+
+\[4\] :: Tracking in a Nutshell; Acts documentation [website](https://acts.readthedocs.io/en/latest/tracking.html)
 
 ---
 
