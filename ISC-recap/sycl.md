@@ -15,7 +15,6 @@ style: |
 ## An Introduction to Developing Highly Parallel Applications Using C++ and SYCL
 
 ---
-
 ## The tutorial
 
 The speakers for the tutorial were part of different groups:
@@ -27,6 +26,24 @@ The speakers for the tutorial were part of different groups:
 Introduction to the SYCL programming model by heavy hands-on sessions.
 
 The material shown during the lecture, and more, can be found on the Codeplay [github](https://github.com/codeplaysoftware/syclacademy) page.
+
+---
+
+## Outline
+
+- Simple overview of the programming model
+
+- Accessing memory
+  - Buffer / Accessor
+  - USM
+
+- SYCL parallel scheme
+
+- Defining Kernels
+
+- Data dependency inference
+
+- The Atlas example and conclusions
 
 ---
 
@@ -466,3 +483,10 @@ q.submit([&] (sycl::handler& h) {
     });
 }).wait()
 ```
+
+
+<!-- TODO: Corrections 
+
+  Slide xxx: 
+
+-->
