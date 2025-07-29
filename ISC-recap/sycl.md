@@ -483,10 +483,3 @@ q.submit([&] (sycl::handler& h) {
     });
 }).wait()
 ```
-
-
-<!-- TODO: Corrections 
-
-  Slide xxx: 
-
--->
